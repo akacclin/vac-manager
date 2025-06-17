@@ -16,12 +16,22 @@ async function writeDb(data: any) {
   await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
 }
 
+// 定义接种计划类型
+interface VaccineSchedule {
+  id: string;
+  vaccineId: string;
+  vaccineName: string;
+  dueDate: string;
+  status: string;
+  dose: number;
+}
+
 // GET: 获取成员的接种计划
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { memberId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ memberId: string }> }
 ) {
-  const memberId = params.memberId;
+  const { memberId } = await params;
   
   if (!memberId) {
     return NextResponse.json(
@@ -54,10 +64,10 @@ export async function GET(
 
 // POST: 生成或更新接种计划
 export async function POST(
-  req: NextRequest,
-  { params }: { params: { memberId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ memberId: string }> }
 ) {
-  const memberId = params.memberId;
+  const { memberId } = await params;
   
   if (!memberId) {
     return NextResponse.json(
@@ -77,7 +87,7 @@ export async function POST(
       );
     }
     
-    const requestData = await req.json();
+    const requestData = await request.json();
     const { selectedVaccines = [] } = requestData;
     
     // 获取疫苗数据库
@@ -104,7 +114,7 @@ export async function POST(
     };
     
     // 创建接种计划
-    const schedules = selectedVaccines.flatMap((vaccineId: string) => {
+    const schedules: VaccineSchedule[] = selectedVaccines.flatMap((vaccineId: string) => {
       const vaccine = vaccineData.vaccines.find((v: any) => v.id === vaccineId);
       if (!vaccine) return [];
       
@@ -131,7 +141,7 @@ export async function POST(
     const mergedSchedules = [...existingSchedules];
     
     // 添加新的计划，避免重复
-    schedules.forEach(schedule => {
+    schedules.forEach((schedule: VaccineSchedule) => {
       if (!mergedSchedules.find(s => s.vaccineId === schedule.vaccineId && s.dose === schedule.dose)) {
         mergedSchedules.push(schedule);
       }

@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 
 interface PageHeaderProps {
   title: string;
+  subtitle?: string;
   showBackButton?: boolean;
   className?: string;
   right?: React.ReactNode;
@@ -14,6 +15,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ 
   title, 
+  subtitle,
   showBackButton = false, 
   className,
   right
@@ -34,7 +36,12 @@ export function PageHeader({
                 <ChevronLeft className="h-5 w-5 text-slate-700" />
               </button>
             )}
-            <h1 className="text-lg font-medium">{title}</h1>
+            <div>
+              <h1 className="text-lg font-medium">{title}</h1>
+              {subtitle && (
+                <p className="text-sm text-slate-500">{subtitle}</p>
+              )}
+            </div>
           </div>
           
           {right && (

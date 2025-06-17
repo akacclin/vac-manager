@@ -87,7 +87,6 @@ export default function KnowledgeBasePage() {
         title="疫苗知识库" 
         subtitle="了解各种疫苗的知识，做出明智的接种决定"
         showBackButton 
-        backUrl="/"
       />
 
       <div className="px-4">

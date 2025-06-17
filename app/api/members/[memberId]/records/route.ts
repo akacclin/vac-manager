@@ -18,10 +18,10 @@ async function writeDb(data: any) {
 
 // GET: 获取成员的接种记录
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { memberId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ memberId: string }> }
 ) {
-  const memberId = params.memberId;
+  const { memberId } = await params;
   
   if (!memberId) {
     return NextResponse.json(
@@ -54,10 +54,10 @@ export async function GET(
 
 // POST: 添加接种记录
 export async function POST(
-  req: NextRequest,
-  { params }: { params: { memberId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ memberId: string }> }
 ) {
-  const memberId = params.memberId;
+  const { memberId } = await params;
   
   if (!memberId) {
     return NextResponse.json(
@@ -77,7 +77,7 @@ export async function POST(
       );
     }
     
-    const recordData = await req.json();
+    const recordData = await request.json();
     
     // 验证必要字段
     if (!recordData.vaccineId || !recordData.date || !recordData.location) {

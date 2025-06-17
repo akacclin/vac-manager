@@ -19,13 +19,14 @@ async function getVaccineDetail(slug: string) {
 }
 
 interface VaccineDetailParams {
-  params: {
+  params: Promise<{
     vaccineSlug: string;
-  };
+  }>;
 }
 
 export default async function VaccineDetailPage({ params }: VaccineDetailParams) {
-  const vaccine = await getVaccineDetail(params.vaccineSlug);
+  const { vaccineSlug } = await params;
+  const vaccine = await getVaccineDetail(vaccineSlug);
   
   if (!vaccine) {
     notFound();
@@ -36,7 +37,6 @@ export default async function VaccineDetailPage({ params }: VaccineDetailParams)
       <PageHeader
         title={vaccine.name}
         showBackButton
-        backUrl="/knowledge"
       />
       
       <div className="px-4">
