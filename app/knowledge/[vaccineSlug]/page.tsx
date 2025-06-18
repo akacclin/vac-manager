@@ -4,6 +4,8 @@ import path from 'path';
 import { Card, CardContent } from '@/components/ui/card';
 import { PageHeader } from '@/components/shared/PageHeader';
 
+export const runtime = 'edge';
+
 // 获取疫苗详情数据
 async function getVaccineDetail(slug: string) {
   try {
@@ -18,11 +20,7 @@ async function getVaccineDetail(slug: string) {
   }
 }
 
-interface VaccineDetailParams {
-  params: Promise<{
-    vaccineSlug: string;
-  }>;
-}
+
 
 export default async function VaccineDetailPage({ params }: VaccineDetailParams) {
   const { vaccineSlug } = await params;

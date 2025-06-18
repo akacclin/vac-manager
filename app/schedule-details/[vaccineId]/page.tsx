@@ -14,6 +14,8 @@ import { useRecords } from '@/lib/hooks/useRecords';
 import { useFamilyMembers } from '@/lib/hooks/useMembers';
 import { formatDate } from '@/lib/utils';
 
+export const runtime = 'edge';
+
 export default function ScheduleDetailPage() {
   const params = useParams<{ vaccineId: string }>();
   const router = useRouter();

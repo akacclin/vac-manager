@@ -3,6 +3,8 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { generateId } from '@/lib/utils';
 
+export const runtime = 'edge';
+
 // 读取数据库文件
 async function readDb() {
   const filePath = path.join(process.cwd(), 'data/mock-db.json');

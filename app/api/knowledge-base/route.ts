@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+export const runtime = 'edge';
+
 export async function GET(req: NextRequest) {
   try {
     // 读取本地数据文件

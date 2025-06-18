@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { VaccineLocation } from '@/lib/amap';
 
+export const runtime = 'edge';
+
 // 模拟数据，实际项目中应该从高德地图 API 获取
 const mockLocations: VaccineLocation[] = [
   {
